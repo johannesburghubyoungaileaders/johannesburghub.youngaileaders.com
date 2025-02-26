@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI for Good Johannesburg Hub</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #f39c12;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --text: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav li {
+            margin: 0 1rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero {
+            background: url('/api/placeholder/1200/600') center/cover;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        section {
+            padding: 5rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        .about {
+            background-color: white;
+        }
+        
+        .benefits {
+            background-color: var(--light);
+        }
+        
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            width: 300px;
+            max-width: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-img {
+            height: 200px;
+            background: url('/api/placeholder/300/200') center/cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .target-audience {
+            background-color: white;
+        }
+        
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .audience-item {
+            background-color: var(--light);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .join {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+        
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        
+        label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        input, select, textarea {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI for Good Johannesburg Hub</h1>
+        <p>United Nations & ITU Young AI Leaders Program</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#benefits">Benefits</a></li>
+            <li><a href="#who">Who We're Looking For</a></li>
+            <li><a href="#join">Join Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🎉 AI for Good Johannesburg: The Future Starts Here! 🌟</h1>
+            <p>Are you ready to use Artificial Intelligence to create real change? Join our community of young leaders making a difference through AI innovation!</p>
+            <a href="#join" class="btn">Join Our Community</a>
+        </div>
+    </section>
+    
+    <section id="about" class="about">
+        <div class="section-title">
+            <h2>About Our Hub</h2>
+            <p>Building a dynamic community driving positive impact</p>
+        </div>
+        <div class="content-container">
+            <p>As the Johannesburg Hub Leader for the AI for Good Young AI Leaders program, we're building a dynamic community of forward-thinkers aged 18-30 who are passionate about using AI to create positive change aligned with the UN Sustainable Development Goals.</p>
+            <br>
+            <p>Our mission is to:</p>
+            <br>
+            <ul>
+                <li>🌱 Empower young leaders to create AI-driven solutions aligned with the UN Sustainable Development Goals (SDGs)</li>
+                <li>🤝 Collaborate with forward-thinkers to tackle local and global challenges</li>
+                <li>💡 Turn big ideas into transformative projects that inspire and benefit communities</li>
+            </ul>
+            <br>
+            <p>Participation in the Young AI Leaders community is entirely voluntary and offers tremendous opportunities for growth, learning, and making a real difference in our world.</p>
+        </div>
+    </section>
+    
+    <section id="benefits" class="benefits">
+        <div class="section-title">
+            <h2>🔥 What's In It For You</h2>
+            <p>Grow your skills, network, and impact</p>
+        </div>
+        <div class="cards">
+            <div class="card">
+                <div class="card-img"></div>
+                <div class="card-content">
+                    <h3>Real-World Impact</h3>
+                    <p>Work on high-impact projects addressing critical challenges like sustainability, education, health, and more, directly aligned with the UN SDGs.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img"></div>
+                <div class="card-content">
+                    <h3>Global Network</h3>
+                    <p>Connect with top innovators and changemakers from around the world, building relationships that will last throughout your career.</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img"></div>
+                <div class="card-content">
+                    <h3>Skill Development</h3>
+                    <p>Enhance your technical, leadership, and collaborative skills in the rapidly evolving AI landscape through hands-on projects and mentorship.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="who" class="target-audience">
+        <div class="section-title">
+            <h2>🧠 Who We're Looking For</h2>
+            <p>A blend of minds and skills to bring bold ideas to life</p>
+        </div>
+        <div class="audience-grid">
+            <div class="audience-item">
+                <h3>🔍 Technical Enthusiasts</h3>
+                <p>Developers, data scientists, or AI practitioners eager to implement innovative solutions and build technology for good.</p>
+            </div>
+            <div class="audience-item">
+                <h3>✨ Creative Thinkers</h3>
+                <p>Educators, social scientists, or visionaries passionate about exploring AI's role in societal transformation.</p>
+            </div>
+            <div class="audience-item">
+                <h3>🎨 Young Innovators</h3>
+                <p>Anyone aged 18–30 with fresh ideas and bold energy ready to make a difference in their community and beyond.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="join" class="join">
+        <div class="section-title">
+            <h2>Join Our Community</h2>
+            <p>Let's make Johannesburg a hub of innovation and purpose!</p>
+        </div>
+        <form id="membership-form">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="18" max="30" required>
+            </div>
+            <div class="form-group">
+                <label for="background">Your Background</label>
+                <select id="background" name="background" required>
+                    <option value="">Select your background</option>
+                    <option value="technical">Technical (Developer, Data Scientist, etc.)</option>
+                    <option value="creative">Creative (Educator, Social Scientist, etc.)</option>
+                    <option value="both">Both Technical and Creative</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="interests">Why are you interested in joining AI for Good? (Optional)</label>
+                <textarea id="interests" name="interests" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn">Submit Application</button>
+        </form>
+    </section>
+    
+    <section id="contact">
+        <div class="section-title">
+            <h2>Contact Us</h2>
+            <p>Get in touch with the Johannesburg Hub Leader</p>
+        </div>
+        <div style="text-align: center;">
+            <p>Email: <a href="mailto:johannesburghub.youngaileaders@gmail.com">johannesburghub.youngaileaders@gmail.com</a></p>
+            <br>
+            <p>Or connect with us on social media:</p>
+            <div class="social-links">
+                <a href="#" title="LinkedIn">Li</a>
+                <a href="#" title="Twitter">Tw</a>
+                <a href="#" title="Instagram">In</a>
+                <a href="#" title="Facebook">Fb</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2025 AI for Good Johannesburg Hub | Part of the UN & ITU Young AI Leaders Program</p>
+        <p><small>This website is not directly affiliated with the United Nations or the International Telecommunication Union.</small></p>
+    </footer>
+
+    <script>
+        // Basic form handling
+        document.getElementById('membership-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Here you would typically send the form data to your server
+            // For now we'll just show a success message
+            alert('Thank you for your interest in joining AI for Good Johannesburg Hub! We will contact you soon.');
+            this.reset();
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
