@@ -392,39 +392,40 @@
             <h2>Join Our Community</h2>
             <p>Let's make Johannesburg a hub of innovation and purpose!</p>
         </div>
-        <form id="membership-form">
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone">
-            </div>
-            <div class="form-group">
-                <label for="age">Age</label>
-                <input type="number" id="age" name="age" min="18" max="30" required>
-            </div>
-            <div class="form-group">
-                <label for="background">Your Background</label>
-                <select id="background" name="background" required>
-                    <option value="">Select your background</option>
-                    <option value="technical">Technical (Developer, Data Scientist, etc.)</option>
-                    <option value="creative">Creative (Educator, Social Scientist, etc.)</option>
-                    <option value="both">Both Technical and Creative</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="interests">Why are you interested in joining AI for Good? (Optional)</label>
-                <textarea id="interests" name="interests" rows="4"></textarea>
-            </div>
-            <button type="submit" class="btn">Submit Application</button>
-        </form>
+      <form id="membership-form" action="form-handler.php" method="POST">
+    <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone">
+    </div>
+    <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" min="18" max="30" required>
+    </div>
+    <div class="form-group">
+        <label for="background">Your Background</label>
+        <select id="background" name="background" required>
+            <option value="">Select your background</option>
+            <option value="technical">Technical (Developer, Data Scientist, etc.)</option>
+            <option value="creative">Creative (Educator, Social Scientist, etc.)</option>
+            <option value="both">Both Technical and Creative</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="interests">Why are you interested in joining AI for Good? (Optional)</label>
+        <textarea id="interests" name="interests" rows="4"></textarea>
+    </div>
+    <button type="submit" class="btn">Submit Application</button>
+</form>
+             
     </section>
     
     <section id="contact">
