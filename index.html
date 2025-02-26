@@ -477,5 +477,69 @@
             });
         });
     </script>
+
+<script>
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+    
+    // Check for status messages on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        var status = getUrlParameter('status');
+        var message = getUrlParameter('message');
+        
+        if (status && message) {
+            // Create status message element
+            var statusDiv = document.createElement('div');
+            statusDiv.className = 'status-message ' + status;
+            statusDiv.textContent = message;
+            
+            // Style based on status
+            if (status === 'success') {
+                statusDiv.style.backgroundColor = '#d4edda';
+                statusDiv.style.color = '#155724';
+                statusDiv.style.border = '1px solid #c3e6cb';
+            } else if (status === 'error') {
+                statusDiv.style.backgroundColor = '#f8d7da';
+                statusDiv.style.color = '#721c24';
+                statusDiv.style.border = '1px solid #f5c6cb';
+            }
+            
+            // Common styles
+            statusDiv.style.padding = '10px 15px';
+            statusDiv.style.borderRadius = '4px';
+            statusDiv.style.margin = '20px auto';
+            statusDiv.style.maxWidth = '600px';
+            
+            // Insert at the top of the form
+            var form = document.getElementById('membership-form');
+            form.parentNode.insertBefore(statusDiv, form);
+            
+            // Scroll to the message
+            statusDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Remove the message after 5 seconds
+            setTimeout(function() {
+                statusDiv.style.opacity = '0';
+                statusDiv.style.transition = 'opacity 1s ease-out';
+                
+                // Remove from DOM after fade out
+                setTimeout(function() {
+                    if (statusDiv.parentNode) {
+                        statusDiv.parentNode.removeChild(statusDiv);
+                    }
+                }, 1000);
+            }, 5000);
+            
+            // Clear the URL parameters without refreshing the page
+            history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
+</script>
+    
 </body>
 </html>
