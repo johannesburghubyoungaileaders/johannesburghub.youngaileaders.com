@@ -280,6 +280,8 @@
             .hero h1 {
                 font-size: 2rem;
             }
+
+            
             
             .hero p {
                 font-size: 1rem;
@@ -298,6 +300,72 @@
                 max-width: 200px;
             }
         }
+
+
+           @media (max-width: 768px) {
+            .video-container {
+                padding: 2rem 1rem;
+            }
+            
+            .video-title {
+                font-size: 1.5rem;
+            }
+            
+            .description {
+                padding: 1.5rem;
+            }
+        }
+
+
+         .video-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        
+        .video-wrapper:hover {
+            transform: scale(1.01);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-title {
+            color: var(--dark);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            position: relative;
+        }
+        
+        .video-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
     </style>
 </head>
 <body>
@@ -345,6 +413,13 @@
             <p>Participation in the Young AI Leaders community is entirely voluntary and offers tremendous opportunities for growth, learning, and making a real difference in our world.</p>
         </div>
     </section>
+
+     <div class="video-container">
+        <h2 class="video-title">🌟 Young AI Leaders: Shaping the Future with AI 🌟</h2>
+        
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/PgMwpmldJVA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
     
     <section id="benefits" class="benefits">
         <div class="section-title">
