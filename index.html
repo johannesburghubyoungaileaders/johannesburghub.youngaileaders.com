@@ -34,6 +34,17 @@
             text-align: center;
         }
         
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+        
+        .logo {
+            max-width: 250px;
+            height: auto;
+        }
+        
         nav {
             background-color: var(--dark);
             padding: 1rem;
@@ -210,35 +221,20 @@
             text-align: center;
         }
         
-        .join {
+        .contact {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             text-align: center;
         }
         
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-            display: grid;
-            gap: 1.5rem;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-        
-        label {
-            margin-bottom: 0.5rem;
+        .contact a {
+            color: white;
             font-weight: bold;
+            text-decoration: underline;
         }
         
-        input, select, textarea {
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: inherit;
+        .contact a:hover {
+            color: var(--accent);
         }
         
         footer {
@@ -297,6 +293,10 @@
             nav li {
                 margin: 0.5rem 0;
             }
+            
+            .logo {
+                max-width: 200px;
+            }
         }
     </style>
 </head>
@@ -304,6 +304,9 @@
     <header>
         <h1>Johannesburg Hub</h1>
         <p>Young AI Leaders</p>
+        <div class="logo-container">
+            <img src="Johannesburg Hub- Coloured Logo.png" alt="Young AI Leaders Community Logo" class="logo">
+        </div>
     </header>
     
     <nav>
@@ -311,7 +314,6 @@
             <li><a href="#about">About</a></li>
             <li><a href="#benefits">Benefits</a></li>
             <li><a href="#who">Who We're Looking For</a></li>
-            <li><a href="#join">Join Us</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
@@ -320,7 +322,7 @@
         <div class="hero-content">
             <h1>🎉 Johannesburg Hub: The Future Starts Here! 🌟</h1>
             <p>Are you ready to use Artificial Intelligence to create real change? Join our community of young leaders making a difference through AI innovation!</p>
-            <a href="#join" class="btn">Join Our Community</a>
+            <a href="#contact" class="btn">Contact Us</a>
         </div>
     </section>
     
@@ -395,55 +397,19 @@
         </div>
     </section>
     
-    <section id="join" class="join">
-        <div class="section-title">
-            <h2>Join Our Community</h2>
-            <p>Let's make Johannesburg a hub of innovation and purpose!</p>
-        </div>
-      <form id="membership-form" action="form-handler.php" method="POST">
-    <div class="form-group">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" required>
-    </div>
-    <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required>
-    </div>
-    <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone">
-    </div>
-    <div class="form-group">
-        <label for="age">Age</label>
-        <input type="number" id="age" name="age" min="18" max="30" required>
-    </div>
-    <div class="form-group">
-        <label for="background">Your Background</label>
-        <select id="background" name="background" required>
-            <option value="">Select your background</option>
-            <option value="technical">Technical (Developer, Data Scientist, etc.)</option>
-            <option value="creative">Creative (Educator, Social Scientist, etc.)</option>
-            <option value="both">Both Technical and Creative</option>
-            <option value="other">Other</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="interests">Why are you interested in joining our community? (Optional)</label>
-        <textarea id="interests" name="interests" rows="4"></textarea>
-    </div>
-    <button type="submit" class="btn">Submit Application</button>
-</form>
-             
-    </section>
-    
-    <section id="contact">
+    <section id="contact" class="contact">
         <div class="section-title">
             <h2>Contact Us</h2>
-            <p>Get in touch with the Johannesburg Hub Leader</p>
+            <p>Interested in joining? Get in touch with the Johannesburg Hub Leader</p>
         </div>
         <div style="text-align: center;">
-            <p>Email: <a href="mailto:johannesburghub.youngaileaders@gmail.com">johannesburghub.youngaileaders@gmail.com</a></p>
+            <p>For any inquiries or to express interest in joining our community, please email us at:</p>
+            <p><a href="mailto:johannesburghub.youngaileaders@gmail.com">johannesburghub.youngaileaders@gmail.com</a></p>
             <br>
+            <p>We're looking for young innovators aged 18-30 who are passionate about using AI for positive change.</p>
+            <p>Let us know about your background, interests, and why you'd like to join our community!</p>
+            <br>
+            <a href="mailto:johannesburghub.youngaileaders@gmail.com" class="btn">Email Us Now</a>
         </div>
     </section>
     
@@ -452,19 +418,12 @@
         <div class="disclaimer">
             <p>The Young AI Leaders community is an initiative by AI for Good. AI for Good is organized by ITU in partnership with over 40 UN Sister Agencies and co-convened with the Government of Switzerland. AI for Good is identifying trustworthy AI applications, building skills and standards, and advancing AI governance for sustainable development.</p>
         </div>
+        <div class="logo-container" style="margin-top: 20px;">
+            <img src="Johannesburg Hub- Coloured Logo.png" alt="Young AI Leaders Community Logo" class="logo" style="max-width: 150px;">
+        </div>
     </footer>
 
     <script>
-        // Basic form handling
-        document.getElementById('membership-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Here you would typically send the form data to your server
-            // For now we'll just show a success message
-            alert('Thank you for your interest in joining Johannesburg Hub! We will contact you soon.');
-            this.reset();
-        });
-        
         // Smooth scrolling for navigation
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -480,69 +439,5 @@
             });
         });
     </script>
-
-<script>
-    // Function to get URL parameters
-    function getUrlParameter(name) {
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(location.search);
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    }
-    
-    // Check for status messages on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        var status = getUrlParameter('status');
-        var message = getUrlParameter('message');
-        
-        if (status && message) {
-            // Create status message element
-            var statusDiv = document.createElement('div');
-            statusDiv.className = 'status-message ' + status;
-            statusDiv.textContent = message;
-            
-            // Style based on status
-            if (status === 'success') {
-                statusDiv.style.backgroundColor = '#d4edda';
-                statusDiv.style.color = '#155724';
-                statusDiv.style.border = '1px solid #c3e6cb';
-            } else if (status === 'error') {
-                statusDiv.style.backgroundColor = '#f8d7da';
-                statusDiv.style.color = '#721c24';
-                statusDiv.style.border = '1px solid #f5c6cb';
-            }
-            
-            // Common styles
-            statusDiv.style.padding = '10px 15px';
-            statusDiv.style.borderRadius = '4px';
-            statusDiv.style.margin = '20px auto';
-            statusDiv.style.maxWidth = '600px';
-            
-            // Insert at the top of the form
-            var form = document.getElementById('membership-form');
-            form.parentNode.insertBefore(statusDiv, form);
-            
-            // Scroll to the message
-            statusDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Remove the message after 5 seconds
-            setTimeout(function() {
-                statusDiv.style.opacity = '0';
-                statusDiv.style.transition = 'opacity 1s ease-out';
-                
-                // Remove from DOM after fade out
-                setTimeout(function() {
-                    if (statusDiv.parentNode) {
-                        statusDiv.parentNode.removeChild(statusDiv);
-                    }
-                }, 1000);
-            }, 5000);
-            
-            // Clear the URL parameters without refreshing the page
-            history.replaceState({}, document.title, window.location.pathname);
-        }
-    });
-</script>
-    
 </body>
 </html>
