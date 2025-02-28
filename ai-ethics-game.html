@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Ethics Challenge Game</title>
+  <style>
+    .game-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .scenario-container {
+      background: linear-gradient(to right, #3498db, #2ecc71);
+      padding: 20px;
+      border-radius: 8px;
+      color: white;
+      margin-bottom: 20px;
+    }
+    
+    .options-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    @media (max-width: 600px) {
+      .options-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .option-button {
+      padding: 15px;
+      border: 2px solid #3498db;
+      background: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .option-button:hover {
+      background: #ecf0f1;
+      transform: translateY(-3px);
+    }
+    
+    .feedback-container {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .score-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    
+    .next-button, .restart-button {
+      background: linear-gradient(to right, #3498db, #2ecc71);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .next-button:hover, .restart-button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    .results-container {
+      text-align: center;
+      display: none;
+    }
+    
+    .results-container h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    
+    .results-message {
+      margin: 20px 0;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    
+    .badge {
+      width: 150px;
+      height: 150px;
+      margin: 20px auto;
+      background: linear-gradient(135deg, #3498db, #2ecc71);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: #ecf0f1;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, #3498db, #2ecc71);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    
+    .principle-tag {
+      display: inline-block;
+      background: #3498db;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 12px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>AI Ethics Challenge</h1>
+    <p>Face real-world AI ethics dilemmas and see if you can navigate the complex decisions that AI developers encounter. Your choices will be evaluated on multiple AI ethics principles.</p>
+    
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+    
+    <div class="score-container">
+      <div>SCENARIO: <span id="questionNumber">1</span>/5</div>
+      <div>SCORE: <span id="scoreDisplay">0</span></div>
+    </div>
+    
+    <div id="gameContent">
+      <div class="scenario-container">
+        <h2 id="scenarioTitle">Loading scenario...</h2>
+        <p id="scenarioDescription">Please wait while we load the scenario...</p>
+        <div id="principleTags"></div>
+      </div>
+      
+      <div class="options-container" id="options">
+        <!-- Options will be loaded here -->
+      </div>
+      
+      <div class="feedback-container" id="feedback">
+        <h3>Feedback</h3>
+        <p id="feedbackText"></p>
+        <button class="next-button" id="nextButton">Next Scenario</button>
+      </div>
+    </div>
+    
+    <div class="results-container" id="results">
+      <h2>Challenge Complete!</h2>
+      <div class="badge" id="scoreBadge">0/100</div>
+      <p class="results-message" id="resultsMessage"></p>
+      <button class="restart-button" id="restartButton">Play Again</button>
+    </div>
+  </div>
+
+  <script>
+    // Game data
+    const scenarios = [
+      {
+        title: "Facial Recognition Deployment",
+        description: "Your team has developed a facial recognition system for a retail chain to identify potential shoplifters. Testing shows 95% accuracy overall, but only 82% accuracy for people with darker skin tones. The client is eager to deploy immediately. What do you do?",
+        principles: ["Fairness", "Transparency"],
+        options: [
+          {
+            text: "Deploy the system as is but disclose the accuracy differences in documentation",
+            feedback: "While transparency is important, deploying a system with known bias could lead to unfair treatment of certain groups. More work is needed to address the accuracy disparities.",
+            score: 40
+          },
+          {
+            text: "Delay deployment to improve accuracy across all demographics, even if it means financial penalties",
+            feedback: "Excellent choice. Prioritizing fairness even at cost to the business demonstrates a commitment to equitable AI. This approach helps prevent discrimination and maintains trust.",
+            score: 100
+          },
+          {
+            text: "Deploy only in stores with demographic matches to high accuracy groups",
+            feedback: "This approach still enables discrimination by creating separate treatment for different communities. It fails to address the root cause of the accuracy disparities.",
+            score: 30
+          },
+          {
+            text: "Deploy but set a higher threshold for flagging individuals with darker skin tones",
+            feedback: "This approach intentionally introduces a different standard for different groups, which is discriminatory and potentially illegal. It would amplify rather than mitigate bias.",
+            score: 10
+          }
+        ]
+      },
+      {
+        title: "Healthcare Prediction Algorithm",
+        description: "Your AI team has built a system that predicts which patients need additional care using hospital cost history as a proxy for health needs. You discover the algorithm recommends additional care for white patients more often than Black patients with similar health conditions because historically less money was spent on Black patients. What's your next step?",
+        principles: ["Fairness", "Human Oversight"],
+        options: [
+          {
+            text: "Continue using cost as a proxy but adjust the thresholds for different demographic groups",
+            feedback: "While this attempts to address the symptom, it doesn't fix the underlying problem of using a biased proxy. This approach could introduce new forms of discrimination.",
+            score: 40
+          },
+          {
+            text: "Rebuild the algorithm using direct health indicators rather than historical cost data",
+            feedback: "Excellent decision! By changing to direct health indicators rather than using a historically biased proxy (cost), you're addressing the root cause of the algorithmic discrimination.",
+            score: 100
+          },
+          {
+            text: "Keep the algorithm but add a human review step for all cases",
+            feedback: "Human oversight is valuable, but humans can have the same biases reflected in the historical data. Without changing the underlying approach, the fundamental issue remains.",
+            score: 60
+          },
+          {
+            text: "Deploy as is but track outcomes to validate performance",
+            feedback: "Simply monitoring a known biased system without addressing the bias means knowingly deploying a system that will discriminate against certain patients, which is ethically problematic.",
+            score: 20
+          }
+        ]
+      },
+      {
+        title: "AI Content Moderation",
+        description: "Your team has built an AI content moderation system for a social platform popular in South Africa. It needs to filter harmful content while respecting free expression. You notice it flags posts in local languages more often than English posts. What's your approach?",
+        principles: ["Inclusivity", "Cultural Context"],
+        options: [
+          {
+            text: "Deploy with manual review for flagged non-English content until the model improves",
+            feedback: "This provides a good interim solution that protects users while acknowledging the system's limitations. The human review helps prevent unfair suppression of local language content.",
+            score: 80
+          },
+          {
+            text: "Add more local language training data before deployment, even if it delays launch",
+            feedback: "Excellent choice! This addresses the root cause by improving the model's understanding of local languages, leading to more fair and accurate moderation across all content.",
+            score: 100
+          },
+          {
+            text: "Launch as is but with reduced sensitivity for non-English content",
+            feedback: "This creates a double standard that could allow harmful content in local languages to remain on the platform, potentially putting those communities at greater risk.",
+            score: 30
+          },
+          {
+            text: "Focus only on English content moderation since it's the platform's primary language",
+            feedback: "This approach would create an unequal experience for non-English speakers and could allow harmful content to proliferate in local language communities.",
+            score: 10
+          }
+        ]
+      },
+      {
+        title: "Predictive Policing Algorithm",
+        description: "Your company is developing a predictive policing algorithm for deployment in Johannesburg. It identifies high-crime areas for increased police presence based on historical arrest data. A team member raises concerns that historical policing patterns might reflect bias. How do you respond?",
+        principles: ["Justice", "Accountability"],
+        options: [
+          {
+            text: "Proceed with deployment but include a disclaimer about potential historical bias",
+            feedback: "Simply acknowledging bias without addressing it doesn't prevent harmful consequences. This approach could reinforce and amplify existing patterns of over-policing in certain communities.",
+            score: 20
+          },
+          {
+            text: "Incorporate additional socioeconomic data and community feedback to balance the algorithm",
+            feedback: "This is a good approach that acknowledges the limitations of arrest data alone and seeks to create a more holistic picture with additional context and community input.",
+            score: 80
+          },
+          {
+            text: "Redesign the system to focus on serious crimes only rather than all arrests",
+            feedback: "This helps mitigate some bias related to minor offenses that might be disproportionately enforced in certain communities, but doesn't fully address underlying data issues.",
+            score: 60
+          },
+          {
+            text: "Work with community representatives and ethics experts to completely redesign the approach",
+            feedback: "Excellent choice! This collaborative approach recognizes the serious ethical implications and seeks input from those most affected, while drawing on interdisciplinary expertise.",
+            score: 100
+          }
+        ]
+      },
+      {
+        title: "AI Hiring Tool Deployment",
+        description: "Your team has developed an AI tool that screens job applicants based on patterns from the company's historically successful employees. Testing reveals it disadvantages women applicants for technical roles since the historical data reflects male-dominated hiring. What do you recommend?",
+        principles: ["Fairness", "Transparency", "Human Oversight"],
+        options: [
+          {
+            text: "Deploy the tool but have HR manually review female candidates to ensure fairness",
+            feedback: "While this attempts to address the symptom, it creates a different process for different genders, which is problematic. It also doesn't fix the underlying biased system.",
+            score: 40
+          },
+          {
+            text: "Adjust the algorithm to give equal weight to male and female candidates",
+            feedback: "This approach tries to force equality in outcomes without addressing why the system is producing biased results in the first place, which could create other distortions.",
+            score: 50
+          },
+          {
+            text: "Recommend against using the tool entirely for hiring decisions",
+            feedback: "This recognizes the serious limitations of the approach, but misses an opportunity to improve hiring processes through careful, ethical AI implementation.",
+            score: 70
+          },
+          {
+            text: "Rebuild using skills-based assessment criteria rather than pattern matching to past employees",
+            feedback: "Excellent choice! This addresses the root cause by changing the fundamental approach from pattern-matching historical (biased) data to evaluating objective skills and qualifications.",
+            score: 100
+          }
+        ]
+      }
+    ];
+    
+    // Game state
+    let currentScenario = 0;
+    let totalScore = 0;
+    let selectedOption = null;
+    
+    // DOM elements
+    const questionNumberEl = document.getElementById('questionNumber');
+    const scoreDisplayEl = document.getElementById('scoreDisplay');
+    const scenarioTitleEl = document.getElementById('scenarioTitle');
+    const scenarioDescriptionEl = document.getElementById('scenarioDescription');
+    const principleTagsEl = document.getElementById('principleTags');
+    const optionsEl = document.getElementById('options');
+    const feedbackEl = document.getElementById('feedback');
+    const feedbackTextEl = document.getElementById('feedbackText');
+    const nextButtonEl = document.getElementById('nextButton');
+    const gameContentEl = document.getElementById('gameContent');
+    const resultsEl = document.getElementById('results');
+    const scoreBadgeEl = document.getElementById('scoreBadge');
+    const resultsMessageEl = document.getElementById('resultsMessage');
+    const restartButtonEl = document.getElementById('restartButton');
+    const progressBarEl = document.getElementById('progressBar');
+    
+    // Initialize game
+    function initGame() {
+      currentScenario = 0;
+      totalScore = 0;
+      updateScore();
+      loadScenario();
+    }
+    
+    // Load current scenario
+    function loadScenario() {
+      const scenario = scenarios[currentScenario];
+      
+      // Update progress bar
+      const progress = ((currentScenario) / scenarios.length) * 100;
+      progressBarEl.style.width = `${progress}%`;
+      
+      // Update question number
+      questionNumberEl.textContent = currentScenario + 1;
+      
+      // Load scenario content
+      scenarioTitleEl.textContent = scenario.title;
+      scenarioDescriptionEl.textContent = scenario.description;
+      
+      // Load principle tags
+      principleTagsEl.innerHTML = '';
+      scenario.principles.forEach(principle => {
+        const tag = document.createElement('span');
+        tag.className = 'principle-tag';
+        tag.textContent = principle;
+        principleTagsEl.appendChild(tag);
+      });
+      
+      // Load options
+      optionsEl.innerHTML = '';
+      scenario.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-button';
+        button.textContent = option.text;
+        button.onclick = () => selectOption(index);
+        optionsEl.appendChild(button);
+      });
+      
+      // Hide feedback
+      feedbackEl.style.display = 'none';
+    }
+    
+    // Handle option selection
+    function selectOption(index) {
+      // Disable all option buttons
+      const optionButtons = document.querySelectorAll('.option-button');
+      optionButtons.forEach(button => {
+        button.disabled = true;
+        button.style.opacity = '0.7';
+      });
+      
+      // Highlight selected option
+      optionButtons[index].style.border = '2px solid #2ecc71';
+      optionButtons[index].style.backgroundColor = '#f0fff0';
+      
+      // Show feedback
+      const scenario = scenarios[currentScenario];
+      feedbackTextEl.textContent = scenario.options[index].feedback;
+      feedbackEl.style.display = 'block';
+      
+      // Update score
+      totalScore += scenario.options[index].score;
+      updateScore();
+    }
+    
+    // Update score display
+    function updateScore() {
+      scoreDisplayEl.textContent = totalScore;
+    }
+    
+    // Handle next button click
+    function nextScenario() {
+      currentScenario++;
+      
+      if (currentScenario < scenarios.length) {
+        loadScenario();
+      } else {
+        showResults();
+      }
+    }
+    
+    // Show final results
+    function showResults() {
+      gameContentEl.style.display = 'none';
+      resultsEl.style.display = 'block';
+      
+      // Calculate final score (average)
+      const finalScore = Math.round(totalScore / scenarios.length);
+      scoreBadgeEl.textContent = `${finalScore}/100`;
+      
+      // Generate results message
+      let message = '';
+      if (finalScore >= 90) {
+        message = "Outstanding! You demonstrate an exceptional understanding of AI ethics principles. Your decisions prioritize fairness, transparency, and human wellbeing. You would make an excellent AI ethics leader!";
+      } else if (finalScore >= 70) {
+        message = "Great job! You have a strong grasp of AI ethics principles. With some refinement in a few areas, you'll be well-equipped to make ethical AI decisions.";
+      } else if (finalScore >= 50) {
+        message = "Good effort! You understand some key AI ethics concepts, but there's room to develop a more nuanced approach to ethical dilemmas in AI.";
+      } else {
+        message = "Thanks for playing! AI ethics involves complex trade-offs. We encourage you to explore our resources on fairness, transparency, and responsible AI development.";
+      }
+      
+      resultsMessageEl.textContent = message;
+      
+      // Update progress bar to 100%
+      progressBarEl.style.width = '100%';
+    }
+    
+    // Restart game
+    function restartGame() {
+      resultsEl.style.display = 'none';
+      gameContentEl.style.display = 'block';
+      initGame();
+    }
+    
+    // Event listeners
+    nextButtonEl.addEventListener('click', nextScenario);
+    restartButtonEl.addEventListener('click', restartGame);
+    
+    // Start game
+    initGame();
+  </script>
+</body>
+</html>
